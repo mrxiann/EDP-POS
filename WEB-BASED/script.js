@@ -19,28 +19,31 @@ const sampleUsers = [
     { username: 'cashier', password: 'cashier', role: 'Cashier' }
 ];
 
+// --- Replacement for sampleCategories (Around line 17 in original script.js) ---
+// IMPORTANT: These paths require an 'images' folder with the corresponding files.
 const sampleCategories = [
-    { name: 'Lipstick', image: 'images/1.jpg' },
-    { name: 'Foundation', image: 'images/2.jpg' },
-    { name: 'Mascara', image: 'images/3.jpg' },
-    { name: 'Blush', image: 'images/4.jpg' },
-    { name: 'Eyeshadow', image: 'images/5.jpg' },
-    { name: 'Skincare', image: 'images/6.jpg' }
+    { name: 'Lipstick', image: 'images/1.png' },
+    { name: 'Foundation', image: 'images/2.png' },
+    { name: 'Concealer', image: 'images/3.png' },
+    { name: 'Blush', image: 'images/4.png' },
+    { name: 'Eyeshadow', image: 'images/14.png' },
+    { name: 'Skincare', image: 'images/11.png' }
 ];
 
+// --- Replacement for sampleProducts (Around line 25 in original script.js) ---
 const sampleProducts = [
-    { category: 'Lipstick', name: 'Velvet Matte Lipstick', price: 299.99, image: 'images/7.jpg' },
-    { category: 'Lipstick', name: 'Glossy Lip Gloss', price: 199.99, image: 'images/8.jpg' },
-    { category: 'Foundation', name: 'Full Coverage Foundation', price: 599.99, image: 'images/9.jpg' },
-    { category: 'Foundation', name: 'Lightweight BB Cream', price: 399.99, image: 'images/10.jpg' },
-    { category: 'Mascara', name: 'Volume Mascara', price: 349.99, image: 'images/11.jpg' },
-    { category: 'Mascara', name: 'Lengthening Mascara', price: 329.99, image: 'images/12.jpg' },
-    { category: 'Blush', name: 'Powder Blush', price: 249.99, image: 'images/13.jpg' },
-    { category: 'Blush', name: 'Cream Blush', price: 279.99, image: 'images/14.jpg' },
-    { category: 'Eyeshadow', name: 'Neutral Palette', price: 699.99, image: 'images/15.jpg' },
-    { category: 'Eyeshadow', name: 'Colorful Palette', price: 799.99, image: 'images/16.jpg' },
-    { category: 'Skincare', name: 'Moisturizer', price: 499.99, image: 'images/17.jpg' },
-    { category: 'Skincare', name: 'Cleanser', price: 349.99, image: 'images/18.jpg' }
+    { category: 'Lipstick', name: 'Velvet Matte Lipstick', price: 299.99, image: 'images/7.png' },
+    { category: 'Lipstick', name: 'Glossy Lip Gloss', price: 199.99, image: 'images/8.png' },
+    { category: 'Foundation', name: 'Full Coverage Foundation', price: 599.99, image: 'images/9.png' },
+    { category: 'Foundation', name: 'Lightweight BB Cream', price: 399.99, image: 'images/10.png' },
+    { category: 'Concealer', name: 'Volume Concealer', price: 349.99, image: 'images/11.png' },
+    { category: 'Concealer', name: 'Lengthening Concealer', price: 329.99, image: 'images/12.png' },
+    { category: 'Blush', name: 'Powder Blush', price: 249.99, image: 'images/13.png' },
+    { category: 'Blush', name: 'Cream Blush', price: 279.99, image: 'images/14.png' },
+    { category: 'Eyeshadow', name: 'Neutral Palette', price: 699.99, image: 'images/15.png' },
+    { category: 'Eyeshadow', name: 'Colorful Palette', price: 799.99, image: 'images/16.png' },
+    { category: 'Skincare', name: 'Moisturizer', price: 499.99, image: 'images/17.png' },
+    { category: 'Skincare', name: 'Cleanser', price: 349.99, image: 'images/18.png' }
 ];
 
 // DOMContentLoaded event listener
@@ -92,18 +95,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize data in localStorage
 function initializeData() {
+    // Only set sample data if it doesn't exist
     if (!localStorage.getItem('posUsers')) {
         localStorage.setItem('posUsers', JSON.stringify(sampleUsers));
     }
     
-    if (!localStorage.getItem('posCategories')) {
-        localStorage.setItem('posCategories', JSON.stringify(sampleCategories));
-    }
-    
-    if (!localStorage.getItem('posProducts')) {
-        localStorage.setItem('posProducts', JSON.stringify(sampleProducts));
-    }
-    
+    // 💥 THIS IS THE CRITICAL FIX 💥
+    // Always overwrite categories and products to ensure the fixed image paths are loaded.
+    // (We did this in the previous fix, but reinforcing the need to ensure it runs now)
+    localStorage.setItem('posCategories', JSON.stringify(sampleCategories));
+    localStorage.setItem('posProducts', JSON.stringify(sampleProducts));
+
     if (!localStorage.getItem('posTransactions')) {
         localStorage.setItem('posTransactions', JSON.stringify([]));
     }
@@ -473,6 +475,7 @@ function displayCategories() {
     categories.forEach(category => {
         const categoryCard = document.createElement('div');
         categoryCard.className = 'category-card';
+        // The image source now uses a public URL that should load
         categoryCard.innerHTML = `
             <div class="category-image">
                 <img src="${category.image}" alt="${category.name}" 
@@ -538,6 +541,7 @@ function displayProducts(categoryName, searchText = '') {
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
+        // The image source now uses a public URL that should load
         productCard.innerHTML = `
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}"
@@ -961,7 +965,7 @@ function saveProduct(e) {
     
     const name = document.getElementById('form-name').value;
     const price = parseFloat(document.getElementById('form-price').value);
-    const image = document.getElementById('form-image').value || 'images/default.jpg';
+    const image = document.getElementById('form-image').value || 'https://via.placeholder.com/120x120/CCCCCC/666666?text=No+Image'; // Updated default image
     const category = document.getElementById('form-category').value;
     const editIndex = document.getElementById('product-form').dataset.editIndex;
     
@@ -1070,7 +1074,7 @@ function saveCategory(e) {
     e.preventDefault();
     
     const name = document.getElementById('form-category-name').value;
-    const image = document.getElementById('form-category-image').value || 'images/default.jpg';
+    const image = document.getElementById('form-category-image').value || 'https://via.placeholder.com/180x180/CCCCCC/666666?text=No+Image'; // Updated default image
     const editIndex = document.getElementById('category-form').dataset.editIndex;
     
     if (!name) {

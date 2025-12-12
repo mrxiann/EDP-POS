@@ -24,7 +24,9 @@ body {
     overflow-x: hidden;
 }
 
-/* Login Screen */
+/* ------------------------------------------------------------------ */
+/* 1. Login Screen */
+/* ------------------------------------------------------------------ */
 #login-screen {
     display: flex;
     justify-content: center;
@@ -74,6 +76,12 @@ body {
     margin-bottom: 20px;
 }
 
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 .input-label {
     display: block;
     margin-bottom: 8px;
@@ -115,7 +123,9 @@ body {
     background-color: #ec407a;
 }
 
-/* Main POS Screen */
+/* ------------------------------------------------------------------ */
+/* 2. Main POS Screen */
+/* ------------------------------------------------------------------ */
 #pos-screen {
     display: none;
     height: 100vh;
@@ -181,7 +191,7 @@ body {
     background-color: var(--secondary-pink);
 }
 
-/* Products Panel */
+/* Products Panel (Categories/Products) */
 .products-panel {
     flex: 3;
     background-color: var(--primary-pink);
@@ -202,7 +212,8 @@ body {
     border-bottom: 2px solid var(--black);
 }
 
-.categories-grid {
+/* Grid Containers */
+.categories-grid, .products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
@@ -211,6 +222,7 @@ body {
     padding: 10px;
 }
 
+/* Category Card */
 .category-card {
     background-color: var(--white);
     border: 1px solid #ccc;
@@ -228,6 +240,7 @@ body {
     transform: translateY(-5px);
 }
 
+/* Category Image Container (Gives fixed size to the area) */
 .category-image {
     width: 180px;
     height: 180px;
@@ -237,8 +250,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    color: #666;
+    overflow: hidden; /* Added to keep image inside */
+}
+
+/* Category Image Element (Fills the fixed container) */
+.category-image img {
+    width: 100%;
+    height: 100%; /* FIX: Ensures image fills the 180x180 parent container */
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .category-name {
@@ -247,16 +267,7 @@ body {
     text-align: center;
 }
 
-/* Products Grid */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    overflow-y: auto;
-    flex: 1;
-    padding: 10px;
-}
-
+/* Product Card */
 .product-card {
     background-color: var(--white);
     border: 1px solid #ccc;
@@ -267,6 +278,7 @@ body {
     align-items: center;
 }
 
+/* Product Image Container (Gives fixed size to the area) */
 .product-image {
     width: 120px;
     height: 120px;
@@ -276,8 +288,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    color: #666;
+    overflow: hidden; /* Added to keep image inside */
+}
+
+/* Product Image Element (Fills the fixed container) */
+.product-image img {
+    width: 100%;
+    height: 100%; /* FIX: Ensures image fills the 120x120 parent container */
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .product-name {
@@ -308,7 +327,7 @@ body {
     background-color: #333;
 }
 
-/* Back Button */
+/* Back Button & Search */
 .back-btn {
     padding: 8px 15px;
     background-color: var(--black);
@@ -321,7 +340,6 @@ body {
     align-self: flex-start;
 }
 
-/* Search Bar */
 .search-bar {
     display: flex;
     align-items: center;
@@ -377,6 +395,11 @@ body {
 
 .cart-table tr:hover {
     background-color: #f9f9f9;
+}
+
+/* Ensure proper table row highlighting */
+.cart-table tr.selected {
+    background-color: #f0f0f0 !important;
 }
 
 .qty-input {
@@ -479,8 +502,13 @@ body {
     background-color: #333;
 }
 
-/* Admin Panel */
-#admin-panel {
+/* ------------------------------------------------------------------ */
+/* 3. Admin Panel and Modals */
+/* ------------------------------------------------------------------ */
+/* Modal Base Styling */
+#admin-login-dialog, #admin-panel, #product-management, 
+#daily-sales, #user-management, #login-history, #receipt-popup,
+#product-form-modal, #category-form-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -493,12 +521,28 @@ body {
     align-items: center;
 }
 
-.admin-container {
-    background-color: var(--primary-pink);
-    border-radius: 10px;
+/* Visible class for JS control */
+#admin-login-dialog.visible, #admin-panel.visible, #product-management.visible,
+#daily-sales.visible, #user-management.visible, #login-history.visible, #receipt-popup.visible {
+    display: flex !important;
+}
+
+/* Modal containers */
+.modal-container, .admin-login-container, .admin-container, 
+.product-management-container, .receipt-container {
+    background-color: white;
     padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.admin-container {
     width: 400px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    background-color: var(--primary-pink);
 }
 
 .admin-title {
@@ -542,56 +586,15 @@ body {
     width: 100%;
 }
 
-/* Admin Login Dialog */
-#admin-login-dialog {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-    justify-content: center;
-    align-items: center;
-}
-
 .admin-login-container {
-    background-color: var(--primary-pink);
-    border-radius: 10px;
-    padding: 30px;
     width: 300px;
 }
 
-.admin-login-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Product Management */
-#product-management {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1002;
-    justify-content: center;
-    align-items: center;
-}
-
+/* Product Management Styles */
 .product-management-container {
-    background-color: var(--primary-pink);
-    border-radius: 10px;
-    padding: 20px;
-    width: 90%;
     max-width: 1000px;
-    max-height: 90%;
-    overflow-y: auto;
+    background-color: var(--primary-pink);
+    padding: 20px;
 }
 
 .management-header {
@@ -664,6 +667,12 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
+/* Add row selection styling */
+#products-table tr.selected,
+#categories-table tr.selected {
+    background-color: #e0f7fa !important;
+}
+
 .crud-buttons {
     display: flex;
     gap: 10px;
@@ -672,7 +681,7 @@ body {
 
 .crud-btn {
     padding: 10px 15px;
-    background-color: var(--black);
+    background-color: var(--dark-pink);
     color: var(--white);
     border: none;
     border-radius: 5px;
@@ -680,56 +689,16 @@ body {
     cursor: pointer;
 }
 
-/* User Management */
-#user-management {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1002;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Daily Sales Report */
-#daily-sales {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1002;
-    justify-content: center;
-    align-items: center;
+.crud-btn:hover {
+    background-color: var(--accent-pink);
 }
 
 /* Receipt Popup */
-#receipt-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1003;
-    justify-content: center;
-    align-items: center;
-}
-
 .receipt-container {
     background-color: #ffccd5;
-    border-radius: 10px;
-    padding: 20px;
-    width: 400px;
-    max-height: 90%;
-    overflow-y: auto;
     border: 3px solid #dc82b4;
+    width: 400px;
+    padding: 20px;
 }
 
 .receipt-header {
@@ -785,168 +754,14 @@ body {
     width: 100%;
 }
 
-/* Login History */
-#login-history {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1002;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Modal */
-.modal-container {
-    background-color: var(--primary-pink);
-    border-radius: 10px;
-    padding: 30px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90%;
-    overflow-y: auto;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    .pos-content {
-        flex-direction: column;
-    }
-    
-    .cart-panel {
-        min-width: 100%;
-    }
-    
-    .categories-grid, .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .categories-grid, .products-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .login-container {
-        width: 90%;
-    }
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 16px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: var(--white);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--black);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #333;
-}
-
-/* Utility Classes */
-.hidden {
-    display: none !important;
-}
-
-.visible {
-    display: flex !important;
-}
-
-.block-visible {
-    display: block !important;
-}
-/* Session info display */
-.session-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--dark-pink);
-    font-weight: bold;
-}
-
-.session-timer {
-    background-color: var(--white);
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid var(--accent-pink);
-}
-/* Screen Management */
-#login-screen, #pos-screen {
-    display: none;
-    width: 100%;
-    min-height: 100vh;
-}
-
-#login-screen.active, #pos-screen.active {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Modal Management */
-#admin-login-dialog, #admin-panel, #product-management, 
-#daily-sales, #user-management, #login-history, #receipt-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-#admin-login-dialog.visible, #admin-panel.visible, #product-management.visible,
-#daily-sales.visible, #user-management.visible, #login-history.visible, #receipt-popup.visible {
-    display: flex;
-}
-
-/* Hidden class */
-.hidden {
-    display: none !important;
-}
-
-/* Modal containers */
-.modal-container, .admin-login-container, .admin-container, 
-.product-management-container, .receipt-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
-}
-.hidden {
-    display: none !important; /* or visibility: hidden; */
-}
-/* Make sure your dialogs are initially hidden */
-#admin-login-dialog, #admin-panel, #product-management, #receipt-popup {
-    display: none; /* or similar */
-    position: fixed; /* if it's a modal */
-    z-index: 1000;
-}
-/* Add these styles to your existing style.css */
-
-/* Summary cards for sales report */
-.summary-cards {
+/* Daily Sales & Login History Specifics */
+.summary-cards, .stats-cards {
     display: flex;
     gap: 15px;
-    margin: 20px 0;
+    margin: 20px 0 15px 0;
 }
 
-.summary-card {
+.summary-card, .stat-card {
     flex: 1;
     background: white;
     border-radius: 8px;
@@ -956,19 +771,18 @@ body {
     border: 1px solid #ddd;
 }
 
-.summary-value {
+.summary-value, .stat-value {
     font-size: 1.5em;
     font-weight: bold;
     color: var(--dark-pink);
     margin-bottom: 5px;
 }
 
-.summary-label {
+.summary-label, .stat-label {
     font-size: 0.9em;
     color: #666;
 }
 
-/* Sales controls */
 .sales-controls, .login-controls {
     background: #f9f9f9;
     padding: 15px;
@@ -991,7 +805,6 @@ body {
     border-radius: 4px;
 }
 
-/* Best sellers list */
 .best-sellers {
     background: white;
     padding: 15px;
@@ -1019,36 +832,6 @@ body {
     border-bottom: none;
 }
 
-/* Stats cards for login history */
-.stats-cards {
-    display: flex;
-    gap: 15px;
-    margin: 15px 0;
-}
-
-.stat-card {
-    flex: 1;
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border: 1px solid #ddd;
-}
-
-.stat-value {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--dark-purple);
-    margin-bottom: 5px;
-}
-
-.stat-label {
-    font-size: 0.9em;
-    color: #666;
-}
-
-/* Status badge */
 .status-badge {
     background: #4CAF50;
     color: white;
@@ -1058,12 +841,10 @@ body {
     font-weight: bold;
 }
 
-/* User controls */
 .user-controls {
     margin-bottom: 20px;
 }
 
-/* Edit and Delete buttons in tables */
 .edit-user-btn, .delete-user-btn {
     padding: 3px 8px;
     margin: 0 2px;
@@ -1090,54 +871,8 @@ body {
 .delete-user-btn:hover {
     background: #d32f2f;
 }
-/* In style.css */
-.category-image img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.product-image img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* Add row selection styling */
-#products-table tr.selected,
-#categories-table tr.selected {
-    background-color: #e0f7fa !important;
-}
-
-/* Modal display fixes */
-#admin-login-dialog.visible,
-#admin-panel.visible,
-#product-management.visible,
-#user-management.visible,
-#daily-sales.visible,
-#login-history.visible,
-#receipt-popup.visible {
-    display: flex !important;
-}
-
-/* Ensure proper table row highlighting */
-.cart-table tr.selected {
-    background-color: #f0f0f0 !important;
-}
 
 /* Form styling for modals */
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
 .input-group input,
 .input-group select {
     width: 100%;
@@ -1147,29 +882,76 @@ body {
     font-size: 14px;
 }
 
-.category-image img,
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+/* ------------------------------------------------------------------ */
+/* 4. Utility & Responsive */
+/* ------------------------------------------------------------------ */
+.hidden {
+    display: none !important;
 }
 
-#product-form-modal,
-#category-form-modal {
-    z-index: 2000 !important;
+.visible {
+    display: flex !important;
 }
 
-.crud-btn {
-    padding: 10px 15px;
-    background-color: var(--dark-pink);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.block-visible {
+    display: block !important;
+}
+
+/* Session info display */
+.session-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dark-pink);
     font-weight: bold;
 }
 
-.crud-btn:hover {
-    background-color: var(--accent-pink);
+.session-timer {
+    background-color: var(--white);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--accent-pink);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--black);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .pos-content {
+        flex-direction: column;
+    }
+    
+    .cart-panel {
+        min-width: 100%;
+    }
+    
+    .categories-grid, .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .categories-grid, .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .login-container {
+        width: 90%;
+    }
 }
