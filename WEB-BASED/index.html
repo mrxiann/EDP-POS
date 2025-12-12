@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velourè Cosmetics POS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="logo1.png" class="logo" alt="Velourè Cosmetics Logo">
+                <h1 class="login-title">Velourè Cosmetics POS</h1>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Username:</label>
+                <input type="text" id="username" class="curved-input" placeholder="Enter username">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Password:</label>
+                <input type="password" id="password" class="curved-input" placeholder="Enter password">
+            </div>
+            
+            <button id="login-btn" class="login-btn">Login</button>
+        </div>
+    </div>
+
+   <!-- Main POS Screen -->
+<div id="pos-screen">
+    <div class="pos-header">
+        <div class="header-left">
+            <img src="logo1.png" class="small-logo" alt="Velourè Cosmetics Logo">
+            <h1 class="pos-title" style="font-family: 'Dancing Script', cursive;">Velourè Cosmetics POS</h1>
+        </div>
+        <div>
+            <button id="logout-btn" class="admin-btn" style="background-color: var(--dark-pink); margin-right: 10px;">Logout</button>
+            <button id="admin-panel-btn" class="admin-btn">Admin Panel</button>
+        </div>
+    </div>
+    
+    <div class="pos-content">
+            <!-- Products Panel -->
+            <div class="products-panel">
+                <h2 class="panel-title">Categories / Products</h2>
+                <div id="categories-grid" class="categories-grid">
+                    <!-- Categories will be dynamically added here -->
+                </div>
+                <div id="products-view" class="hidden">
+                    <!-- Products will be dynamically added here -->
+                </div>
+            </div>
+            
+            <!-- Cart and Payment Panel -->
+            <div class="cart-panel">
+                <h2 class="panel-title">Shopping Cart</h2>
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        <!-- Cart items will be dynamically added here -->
+                    </tbody>
+                </table>
+                
+                <div class="cart-buttons">
+                    <button id="remove-item-btn" class="cart-btn">Remove Item</button>
+                    <button id="clear-cart-btn" class="cart-btn">Clear Cart</button>
+                </div>
+                
+                <h2 class="panel-title">Payment & Summary</h2>
+                <div class="payment-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Vatable Amount:</span>
+                        <span id="vatable-amount" class="summary-value">0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">VAT (12%):</span>
+                        <span id="vat-amount" class="summary-value">0.00</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Total Price:</span>
+                        <span id="total-price" class="summary-value">0.00</span>
+                    </div>
+                    
+                    <div class="payment-input">
+                        <label>Payment:</label>
+                        <input type="number" id="payment-input" placeholder="Enter amount">
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Change:</span>
+                        <span id="change-amount" class="summary-value">0.00</span>
+                    </div>
+                </div>
+                
+                <div class="payment-buttons">
+                    <button id="apply-discount-btn" class="payment-btn">Apply Discount</button>
+                    <button id="process-payment-btn" class="payment-btn">Process Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Dialog -->
+    <div id="admin-login-dialog">
+        <div class="admin-login-container">
+            <h2 class="admin-login-title">Admin Login</h2>
+            <div class="input-group">
+                <label class="input-label">Username:</label>
+                <input type="text" id="admin-username" class="curved-input">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Password:</label>
+                <input type="password" id="admin-password" class="curved-input">
+            </div>
+            <button id="admin-login-btn" class="login-btn" style="margin-top: 20px;">Login</button>
+            <button id="cancel-admin-login" class="close-admin-btn" style="margin-top: 10px; background-color: #ccc; color: #333;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel">
+        <div class="admin-container">
+            <h2 class="admin-title">Admin Panel</h2>
+            <div class="admin-options">
+                <button id="product-management-btn" class="admin-option-btn">Product Management</button>
+                <button id="user-management-btn" class="admin-option-btn">User Management</button>
+                <button id="daily-sales-btn" class="admin-option-btn">Daily Sales</button>
+                <button id="login-history-btn" class="admin-option-btn">Login History</button>
+            </div>
+            <button id="close-admin-btn" class="close-admin-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Product Management -->
+    <div id="product-management">
+        <div class="product-management-container">
+            <div class="management-header">
+                <h2 class="management-title">Product Management</h2>
+                <button id="close-product-management" class="close-btn">Close</button>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" data-tab="products-tab">Products</button>
+                <button class="tab" data-tab="categories-tab">Categories</button>
+            </div>
+            
+            <!-- Products Tab -->
+            <div id="products-tab" class="tab-content active">
+                <div class="crud-buttons">
+                    <button id="add-product-btn" class="crud-btn">Add New Product</button>
+                    <button id="edit-product-btn" class="crud-btn">Edit Selected Product</button>
+                    <button id="delete-product-btn" class="crud-btn">Delete Product</button>
+                </div>
+                
+                <div class="search-bar">
+                    <label>Filter by Category:</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                
+                <div class="search-bar">
+                    <label>Search Name:</label>
+                    <input type="text" id="product-search" placeholder="Search product name">
+                </div>
+                
+                <table class="management-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Image Path</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table">
+                        <!-- Products will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Categories Tab -->
+            <div id="categories-tab" class="tab-content">
+                <div class="crud-buttons">
+                    <button id="add-category-btn" class="crud-btn">Add New Category</button>
+                    <button id="edit-category-btn" class="crud-btn">Edit Selected Category</button>
+                    <button id="delete-category-btn" class="crud-btn">Delete Category</button>
+                    <button id="view-category-products-btn" class="crud-btn">View Products</button>
+                </div>
+                
+                <table class="management-table">
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Image File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categories-table">
+                        <!-- Categories will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Popup -->
+    <div id="receipt-popup">
+        <div class="receipt-container">
+            <div class="receipt-header">
+                <img src="logo1.png" class="receipt-logo" alt="Velourè Cosmetics Logo">
+                <div class="receipt-info">
+                    <div class="receipt-store">Velourè Cosmetics POS</div>
+                    <div>Pagadian City, Zamboanga Del Sur</div>
+                    <div>Tel: (062) 925-xxxx</div>
+                </div>
+            </div>
+            
+            <div id="receipt-content" class="receipt-content">
+                <!-- Receipt content will be dynamically added here -->
+            </div>
+            
+            <button id="close-receipt-btn" class="close-receipt-btn">Close</button>
+        </div>
+    </div>
+
+   <div id="daily-sales" class="modal-container-wrapper"> 
+    <div class="modal-container">
+        <div class="management-header">
+            <h2 class="management-title">Daily Sales Report</h2>
+            <button id="close-daily-sales" class="close-btn">Close</button>
+        </div>
+        
+        <div id="daily-sales-content" style="padding: 20px;">
+            <div class="sales-summary">
+                <h3 id="summary-date-title">Today's Summary (Loading...)</h3>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div id="total-revenue" class="summary-value">...</div>
+                        <div class="summary-label">Total Revenue</div>
+                    </div>
+                    <div class="summary-card">
+                        <div id="total-transactions" class="summary-value">...</div>
+                        <div class="summary-label">Transactions</div>
+                    </div>
+                    <div class="summary-card">
+                        <div id="average-transaction" class="summary-value">...</div>
+                        <div class="summary-label">Average Sale</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sales-controls">
+                <label>Filter by Date: </label>
+                <input type="date" id="date-filter"> <button id="apply-filter-btn" class="crud-btn" style="margin-left: 10px;">Apply Filter</button>
+                <button id="export-sales-btn" class="crud-btn">Export Data</button>
+            </div>
+            
+            <h3>Transaction History</h3>
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Time</th>
+                        <th>Cashier</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-history-body"> 
+                    <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading transactions...</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="best-sellers">
+                <h3>Top Selling Products Today</h3>
+                <ul id="best-sellers-list">
+                    <li>Loading best sellers...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user-management">
+    <div class="modal-container">
+        <div class="management-header">
+            <h2 class="management-title">User Management</h2>
+            <button id="close-user-management" class="close-btn">Close</button>
+        </div>
+        
+        <div id="user-management-content" style="padding: 20px;">
+            <h3>User Accounts</h3>
+            
+            <div class="user-controls">
+                <button id="add-user-btn" class="crud-btn" style="margin-bottom: 15px;">Add New User</button>
+            </div>
+            
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <tr><td colspan="3" style="text-align: center; padding: 20px;">Loading user data...</td></tr>
+                </tbody>
+            </table>
+            <p id="total-users-summary" style="margin-top: 20px; font-size: 0.9em;">Total users: 0</p>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- Login History -->
+<div id="login-history">
+    <div class="modal-container">
+        <div class="management-header">
+            <h2 class="management-title">Login History</h2>
+            <button id="close-login-history" class="close-btn">Close</button>
+        </div>
+        
+        <div id="login-history-content" style="padding: 20px;">
+            <div class="login-stats">
+                <h3>Login Statistics</h3>
+                <p>Total login records: <span id="total-login-records">...</span></p>
+                
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div id="today-logins" class="stat-value">...</div>
+                        <div class="stat-label">Today's Logins</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="admin-logins" class="stat-value">...</div>
+                        <div class="stat-label">Admin Logins</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="last-login-time" class="stat-value">...</div>
+                        <div class="stat-label">Last Login</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="login-controls">
+                <label>Filter by User: </label>
+                <select id="user-filter">
+                    <option value="all">All Users</option> 
+                </select>
+                <label style="margin-left: 20px;">Filter by Type: </label>
+                <select id="type-filter">
+                    <option value="all">All Types</option>
+                    <option value="Main">Main Login</option>
+                    <option value="Admin">Admin Login</option>
+                </select>
+                <button id="apply-login-filter" class="crud-btn" style="margin-left: 10px;">Apply Filters</button>
+                <button id="clear-login-history" class="crud-btn">Clear History</button>
+            </div>
+            
+            <h3>Login Records</h3>
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Username</th>
+                        <th>Login Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="login-table-body">
+                    <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading login records...</td></tr>
+                </tbody>
+            </table>
+            <p id="records-summary" style="margin-top: 20px; font-size: 0.9em; color: #666;">
+                Loading records summary...
+            </p>
+        </div>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
