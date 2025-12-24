@@ -10,7 +10,8 @@ let cart = [];
 let lastTransaction = null;
 const VAT_RATE = 0.12;
 
-const SESSION_TIMEOUT = 30; // in minutes
+// Session timeout in minutes
+const SESSION_TIMEOUT = 30;
 
 // Sample data for the POS system
 const sampleUsers = [
@@ -27,7 +28,6 @@ const sampleCategories = [
     { name: 'Skincare', image: 'images/Skincare/skincare-category.jpg' }
 ];
 
-// FIXED: Updated products with correct image paths matching your folder structure
 const sampleProducts = [
     { category: 'Lipstick', name: 'Velvet Matte Lipstick', price: 299.99, image: 'images/Lipstick/1.jpg' },
     { category: 'Lipstick', name: 'Glossy Lip Gloss', price: 199.99, image: 'images/Lipstick/2.jpg' },
@@ -61,7 +61,6 @@ const sampleProducts = [
     { category: 'Skincare', name: 'Eye Cream', price: 449.99, image: 'images/Skincare/5.jpg' }
 ];
 
-// DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
     
@@ -115,7 +114,7 @@ function initializeData() {
         localStorage.setItem('posUsers', JSON.stringify(sampleUsers));
     }
     
-    // CRITICAL FIX: Always overwrite with correct image paths
+    // Always overwrite with correct image paths
     localStorage.setItem('posCategories', JSON.stringify(sampleCategories));
     localStorage.setItem('posProducts', JSON.stringify(sampleProducts));
 
@@ -514,11 +513,15 @@ function showProductsByCategory(categoryName) {
     const productsView = document.getElementById('products-view');
     productsView.classList.remove('hidden');
     
+    // Update panel title dynamically with category name
+    const panelTitle = document.querySelector('.products-panel .panel-title');
+    panelTitle.textContent = `${categoryName} Products`;
+    
     productsView.innerHTML = `
         <button id="back-to-categories" class="back-btn">Back to Categories</button>
         <div class="search-bar">
             <label>Search Product:</label>
-            <input type="text" id="product-search-pos" placeholder="Search product name">
+            <input type="text" id="product-search-pos" placeholder="Search ${categoryName.toLowerCase()}...">
         </div>
         <div id="products-grid" class="products-grid"></div>
     `;
@@ -527,6 +530,10 @@ function showProductsByCategory(categoryName) {
         productsView.classList.add('hidden');
         productsGrid.classList.remove('hidden');
         currentCategory = null;
+        
+        // Reset panel title when going back to categories
+        const panelTitle = document.querySelector('.products-panel .panel-title');
+        panelTitle.textContent = 'Categories / Products';
     });
     
     document.getElementById('product-search-pos').addEventListener('input', function() {
@@ -549,6 +556,16 @@ function displayProducts(categoryName, searchText = '') {
     });
     
     productsGrid.innerHTML = '';
+    
+    if (filteredProducts.length === 0) {
+        productsGrid.innerHTML = `
+            <div class="no-products">
+                <p>No products found in "${categoryName}" category.</p>
+                <p>Try a different search term or check back later.</p>
+            </div>
+        `;
+        return;
+    }
     
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
