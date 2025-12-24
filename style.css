@@ -948,3 +948,76 @@ body {
         width: 90%;
     }
 }
+
+/* No Products Message */
+.no-products {
+    text-align: center;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
+    color: #666;
+    font-style: italic;
+}
+
+.no-products p {
+    margin-bottom: 10px;
+}
+
+/* Category-specific title styling */
+.products-panel .panel-title.category-active {
+    color: var(--dark-pink);
+    font-size: 1.3em;
+}
+
+.back-btn {
+    padding: 8px 15px;
+    background-color: var(--dark-pink);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-btn:hover {
+    background-color: var(--accent-pink);
+}
+
+.back-btn::before {
+    content: "←";
+    font-size: 1.2em;
+}
+
+/* Search bar with category context */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: var(--white);
+    padding: 8px 15px;
+    border-radius: 5px;
+    border-left: 4px solid var(--accent-pink);
+}
+
+.search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: var(--dark-pink);
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+}
