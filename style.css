@@ -740,7 +740,6 @@ body {
     text-align: center;
     margin: 0 auto; 
 }
-
 .close-receipt-btn {
     margin-top: 20px;
     padding: 10px 20px;
@@ -752,8 +751,23 @@ body {
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-    width: 90%; 
+    width: 90%;
     max-width: 600px;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.close-receipt-btn:hover {
+    background-color: var(--dark-pink);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.close-receipt-btn:active {
+    transform: translateY(0);
 }
 
 /* Daily Sales & Login History Specifics */
