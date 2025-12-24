@@ -10,8 +10,7 @@ let cart = [];
 let lastTransaction = null;
 const VAT_RATE = 0.12;
 
-// Session timeout in minutes
-const SESSION_TIMEOUT = 30;
+const SESSION_TIMEOUT = 30; // in minutes
 
 // Sample data for the POS system
 const sampleUsers = [
@@ -19,31 +18,47 @@ const sampleUsers = [
     { username: 'cashier', password: 'cashier', role: 'Cashier' }
 ];
 
-// --- Replacement for sampleCategories (Around line 17 in original script.js) ---
-// IMPORTANT: These paths require an 'images' folder with the corresponding files.
 const sampleCategories = [
-    { name: 'Lipstick', image: 'images/1.png' },
-    { name: 'Foundation', image: 'images/2.png' },
-    { name: 'Concealer', image: 'images/3.png' },
-    { name: 'Blush', image: 'images/4.png' },
-    { name: 'Eyeshadow', image: 'images/14.png' },
-    { name: 'Skincare', image: 'images/11.png' }
+    { name: 'Lipstick', image: 'images/Lipstick/lipstick-category.jpg' },
+    { name: 'Foundation', image: 'images/Foundation/foundation-category.jpg' },
+    { name: 'Concealer', image: 'images/Concealer/concealer-category.jpg' },
+    { name: 'Blush', image: 'images/Blush/blush-category.jpg' },
+    { name: 'Eyeshadow', image: 'images/Eyeshadow/eyeshadow-category.jpg' },
+    { name: 'Skincare', image: 'images/Skincare/skincare-category.jpg' }
 ];
 
-// --- Replacement for sampleProducts (Around line 25 in original script.js) ---
+// FIXED: Updated products with correct image paths matching your folder structure
 const sampleProducts = [
-    { category: 'Lipstick', name: 'Velvet Matte Lipstick', price: 299.99, image: 'images/7.png' },
-    { category: 'Lipstick', name: 'Glossy Lip Gloss', price: 199.99, image: 'images/8.png' },
-    { category: 'Foundation', name: 'Full Coverage Foundation', price: 599.99, image: 'images/9.png' },
-    { category: 'Foundation', name: 'Lightweight BB Cream', price: 399.99, image: 'images/10.png' },
-    { category: 'Concealer', name: 'Volume Concealer', price: 349.99, image: 'images/11.png' },
-    { category: 'Concealer', name: 'Lengthening Concealer', price: 329.99, image: 'images/12.png' },
-    { category: 'Blush', name: 'Powder Blush', price: 249.99, image: 'images/13.png' },
-    { category: 'Blush', name: 'Cream Blush', price: 279.99, image: 'images/14.png' },
-    { category: 'Eyeshadow', name: 'Neutral Palette', price: 699.99, image: 'images/15.png' },
-    { category: 'Eyeshadow', name: 'Colorful Palette', price: 799.99, image: 'images/16.png' },
-    { category: 'Skincare', name: 'Moisturizer', price: 499.99, image: 'images/17.png' },
-    { category: 'Skincare', name: 'Cleanser', price: 349.99, image: 'images/18.png' }
+    { category: 'Lipstick', name: 'Velvet Matte Lipstick', price: 299.99, image: 'images/Lipstick/1.jpg' },
+    { category: 'Lipstick', name: 'Glossy Lip Gloss', price: 199.99, image: 'images/Lipstick/2.jpg' },
+    { category: 'Lipstick', name: 'Liquid Lipstick', price: 349.99, image: 'images/Lipstick/3.jpg' },
+    { category: 'Lipstick', name: 'Lip Stain', price: 249.99, image: 'images/Lipstick/4.jpg' },
+    { category: 'Lipstick', name: 'Lip Liner', price: 179.99, image: 'images/Lipstick/5.jpg' },
+    
+    { category: 'Foundation', name: 'Full Coverage Foundation', price: 599.99, image: 'images/Foundation/1.jpg' },
+    { category: 'Foundation', name: 'Lightweight BB Cream', price: 399.99, image: 'images/Foundation/2.jpg' },
+    { category: 'Foundation', name: 'Mineral Powder Foundation', price: 459.99, image: 'images/Foundation/3.jpg' },
+    
+    { category: 'Concealer', name: 'Full Coverage Concealer', price: 349.99, image: 'images/Concealer/1.jpg' },
+    { category: 'Concealer', name: 'Color Corrector', price: 329.99, image: 'images/Concealer/2.jpg' },
+    { category: 'Concealer', name: 'Brightening Concealer', price: 379.99, image: 'images/Concealer/3.jpg' },
+    
+    { category: 'Blush', name: 'Powder Blush', price: 249.99, image: 'images/Blush/1.jpg' },
+    { category: 'Blush', name: 'Cream Blush', price: 279.99, image: 'images/Blush/2.jpg' },
+    { category: 'Blush', name: 'Liquid Blush', price: 299.99, image: 'images/Blush/3.jpg' },
+    { category: 'Blush', name: 'Blush Palette', price: 499.99, image: 'images/Blush/4.jpg' },
+    { category: 'Blush', name: 'Highlighter Blush Duo', price: 429.99, image: 'images/Blush/5.jpg' },
+    
+    { category: 'Eyeshadow', name: 'Neutral Palette', price: 699.99, image: 'images/Eyeshadow/1.jpg' },
+    { category: 'Eyeshadow', name: 'Colorful Palette', price: 799.99, image: 'images/Eyeshadow/2.jpg' },
+    { category: 'Eyeshadow', name: 'Single Eyeshadow', price: 199.99, image: 'images/Eyeshadow/3.jpg' },
+    { category: 'Eyeshadow', name: 'Cream Eyeshadow', price: 279.99, image: 'images/Eyeshadow/4.jpg' },
+    
+    { category: 'Skincare', name: 'Moisturizer', price: 499.99, image: 'images/Skincare/1.jpg' },
+    { category: 'Skincare', name: 'Cleanser', price: 349.99, image: 'images/Skincare/2.jpg' },
+    { category: 'Skincare', name: 'Serum', price: 599.99, image: 'images/Skincare/3.jpg' },
+    { category: 'Skincare', name: 'Face Mask', price: 299.99, image: 'images/Skincare/4.jpg' },
+    { category: 'Skincare', name: 'Eye Cream', price: 449.99, image: 'images/Skincare/5.jpg' }
 ];
 
 // DOMContentLoaded event listener
@@ -100,9 +115,7 @@ function initializeData() {
         localStorage.setItem('posUsers', JSON.stringify(sampleUsers));
     }
     
-    // 💥 THIS IS THE CRITICAL FIX 💥
-    // Always overwrite categories and products to ensure the fixed image paths are loaded.
-    // (We did this in the previous fix, but reinforcing the need to ensure it runs now)
+    // CRITICAL FIX: Always overwrite with correct image paths
     localStorage.setItem('posCategories', JSON.stringify(sampleCategories));
     localStorage.setItem('posProducts', JSON.stringify(sampleProducts));
 
@@ -475,7 +488,6 @@ function displayCategories() {
     categories.forEach(category => {
         const categoryCard = document.createElement('div');
         categoryCard.className = 'category-card';
-        // The image source now uses a public URL that should load
         categoryCard.innerHTML = `
             <div class="category-image">
                 <img src="${category.image}" alt="${category.name}" 
@@ -541,7 +553,6 @@ function displayProducts(categoryName, searchText = '') {
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        // The image source now uses a public URL that should load
         productCard.innerHTML = `
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}"
@@ -965,7 +976,7 @@ function saveProduct(e) {
     
     const name = document.getElementById('form-name').value;
     const price = parseFloat(document.getElementById('form-price').value);
-    const image = document.getElementById('form-image').value || 'https://via.placeholder.com/120x120/CCCCCC/666666?text=No+Image'; // Updated default image
+    const image = document.getElementById('form-image').value || 'https://via.placeholder.com/120x120/CCCCCC/666666?text=No+Image';
     const category = document.getElementById('form-category').value;
     const editIndex = document.getElementById('product-form').dataset.editIndex;
     
@@ -1074,7 +1085,7 @@ function saveCategory(e) {
     e.preventDefault();
     
     const name = document.getElementById('form-category-name').value;
-    const image = document.getElementById('form-category-image').value || 'https://via.placeholder.com/180x180/CCCCCC/666666?text=No+Image'; // Updated default image
+    const image = document.getElementById('form-category-image').value || 'https://via.placeholder.com/180x180/CCCCCC/666666?text=No+Image';
     const editIndex = document.getElementById('category-form').dataset.editIndex;
     
     if (!name) {
