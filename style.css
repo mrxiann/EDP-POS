@@ -692,14 +692,16 @@ body {
 .receipt-container {
     background-color: #ffccd5;
     border: 3px solid #dc82b4;
-    width: 400px;
+    width: 700px;
     padding: 20px;
+    align-items: center;
 }
 
 .receipt-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .receipt-logo {
@@ -733,6 +735,10 @@ body {
     font-size: 14px;
     line-height: 1.5;
     white-space: pre-wrap;
+    width: 90%; 
+    max-width: 600px;
+    text-align: center;
+    margin: 0 auto; 
 }
 
 .close-receipt-btn {
@@ -746,7 +752,8 @@ body {
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-    width: 100%;
+    width: 90%; 
+    max-width: 600px;
 }
 
 /* Daily Sales & Login History Specifics */
