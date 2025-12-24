@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Verification</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .image-container { display: inline-block; margin: 10px; text-align: center; }
+        .image-container img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; }
+        .status { padding: 5px; margin-top: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Image Path Verification</h1>
+    
+    <h2>Category Images:</h2>
+    <div id="category-images"></div>
+    
+    <h2>Product Images:</h2>
+    <div id="product-images"></div>
+    
+    <script>
+        // Test category images
+        const categories = [
+            { name: 'Lipstick', path: 'images/Lipstick/lipstick-category.jpg' },
+            { name: 'Foundation', path: 'images/Foundation/foundation-category.jpg' },
+            { name: 'Concealer', path: 'images/Concealer/concealer-category.jpg' },
+            { name: 'Blush', path: 'images/Blush/blush-category.jpg' },
+            { name: 'Eyeshadow', path: 'images/Eyeshadow/eyeshadow-category.jpg' },
+            { name: 'Skincare', path: 'images/Skincare/skincare-category.jpg' }
+        ];
+        
+        // Test product images
+        const products = [
+            { name: 'Lipstick 1', path: 'images/Lipstick/1.jpg' },
+            { name: 'Foundation 1', path: 'images/Foundation/1.jpg' },
+            { name: 'Concealer 1', path: 'images/Concealer/1.jpg' },
+            { name: 'Blush 1', path: 'images/Blush/1.jpg' },
+            { name: 'Eyeshadow 1', path: 'images/Eyeshadow/1.jpg' },
+            { name: 'Skincare 1', path: 'images/Skincare/1.jpg' }
+        ];
+        
+        function testImage(path) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = path;
+            });
+        }
+        
+        async function displayImages() {
+            const categoryContainer = document.getElementById('category-images');
+            const productContainer = document.getElementById('product-images');
+            
+            // Test categories
+            for (const category of categories) {
+                const exists = await testImage(category.path);
+                const div = document.createElement('div');
+                div.className = 'image-container';
+                div.innerHTML = `
+                    <img src="${category.path}" alt="${category.name}">
+                    <div>${category.name}</div>
+                    <div class="status ${exists ? 'success' : 'error'}">
+                        ${exists ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div>Path: ${category.path}</div>
+                `;
+                categoryContainer.appendChild(div);
+            }
+            
+            // Test products
+            for (const product of products) {
+                const exists = await testImage(product.path);
+                const div = document.createElement('div');
+                div.className = 'image-container';
+                div.innerHTML = `
+                    <img src="${product.path}" alt="${product.name}">
+                    <div>${product.name}</div>
+                    <div class="status ${exists ? 'success' : 'error'}">
+                        ${exists ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div>Path: ${product.path}</div>
+                `;
+                productContainer.appendChild(div);
+            }
+        }
+        
+        displayImages();
+    </script>
+</body>
+</html>

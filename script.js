@@ -10,8 +10,7 @@ let cart = [];
 let lastTransaction = null;
 const VAT_RATE = 0.12;
 
-// Session timeout in minutes
-const SESSION_TIMEOUT = 30;
+const SESSION_TIMEOUT = 30; // in minutes
 
 // Sample data for the POS system
 const sampleUsers = [
